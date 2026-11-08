@@ -68,8 +68,8 @@ English · [简体中文](README-zh.md)
 | Runtime dependencies | **zero** |
 
 ```sh
-dsh plugin --profile <name> add @perrylink/dsh-research-core dsh-claim-check
-dsh --profile <name> --dump-config | grep dsh-claim-check
+dsh plugin --profile <name> add @perrylink/dsh-research-core @perrylink/dsh-claim-check
+dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 ```
 
 ## Configuration

@@ -154,9 +154,9 @@ describe('tools', () => {
 describe('package', () => {
   it('VERSION matches package.json and the patch lists its keys', async () => {
     const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as Record<string, unknown>
-    expect(pkg['name']).toBe('dsh-claim-check')
+    expect(pkg['name']).toBe('@perrylink/dsh-claim-check')
     expect(pkg['version']).toBe(VERSION)
-    expect(pkg['author']).toBe('dsh-claim-check contributors')
+    expect(pkg['author']).toBe('PerryLink contributors')
     expect(pkg['dsh']).toEqual({ manifestVersion: 1, bundle: { patch: './cordis.patch.yml' } })
   })
 })

@@ -6,6 +6,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Packaging: published as `@perrylink/dsh-claim-check`; npm rejects the
+  unscoped name as too similar to the existing `dsh-claimcheck` package.
+
 ### Fixed
 
 - Re-running the same claim check no longer fails with `STORE_ERROR`: evidence

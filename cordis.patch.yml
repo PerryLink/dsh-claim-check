@@ -4,7 +4,7 @@
 # the profile load loudly. All checks are local and deterministic — no network.
 - insert:
     - id: dsh-claim-check
-      name: dsh-claim-check
+      name: "@perrylink/dsh-claim-check"
       config:
         enabled: true
         root: .claim-check
