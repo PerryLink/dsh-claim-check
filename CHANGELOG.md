@@ -4,7 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.1] - 2026-11-08
+
+### Changed
+
+- Release-engineering refresh: CHANGELOG accuracy, package metadata and authors; no runtime changes.
+
+## [0.1.0] - 2026-11-08
 
 - Packaging: published as `@perrylink/dsh-claim-check`; npm rejects the
   unscoped name as too similar to the existing `dsh-claimcheck` package.
@@ -26,8 +32,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   doc_anchor evidence); it now records the snapshot it actually read.
 - `package.json#author` said `dsh-statcheck contributors` on the claim-check
   package.
-
-## [0.1.0] - 2026-11-08
 
 First release: byte-level claim support checking.
 

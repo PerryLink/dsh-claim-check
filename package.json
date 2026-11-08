@@ -1,6 +1,6 @@
 {
   "name": "@perrylink/dsh-claim-check",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Deterministic claim support checking for DeepSeek Harness: verbatim quote spans, number matching, labelled-value contradiction, negation and hedging polarity against the cited sentence, REP v1 evidence/claim/verdict records and SARIF output. A paraphrase is reported as insufficient, never as supported.",
   "author": "PerryLink contributors",
   "repository": {
@@ -29,7 +29,9 @@
     "CHANGELOG.md",
     "README.md",
     "README-zh.md",
-    "LICENSE"
+    "LICENSE",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "sideEffects": false,
   "dsh": {
@@ -79,5 +81,8 @@
     "verify:package": "node scripts/verify-package.mjs",
     "bench:claims": "pnpm run build && node bench/run-claims.mjs"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
 }
