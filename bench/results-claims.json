@@ -1,5 +1,4 @@
 {
-  "generatedAt": "2026-11-08T09:17:54.493Z",
   "command": "node bench/run-claims.mjs",
   "benchDir": "/mnt/d/Projects/dsh/plugins/dsh-research-bench",
   "metrics": {

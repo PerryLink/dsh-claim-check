@@ -74,7 +74,7 @@ const metrics = {
   byCategory: Object.fromEntries(Object.entries(byCategory).map(([category, value]) => [category, { ...value, accuracy: ratio(value.correct, value.total) }])),
 }
 
-const report = { generatedAt: new Date().toISOString(), command: 'node bench/run-claims.mjs', benchDir: benchRoot, metrics, predictions }
+const report = { command: 'node bench/run-claims.mjs', benchDir: benchRoot, metrics, predictions }
 const jsonFlag = process.argv.indexOf('--json')
 if (jsonFlag !== -1 && process.argv[jsonFlag + 1] !== undefined) {
   writeFileSync(process.argv[jsonFlag + 1], `${JSON.stringify(report, null, 2)}\n`, 'utf8')
