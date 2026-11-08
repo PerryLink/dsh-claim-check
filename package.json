@@ -76,7 +76,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "bench:stats": "pnpm run build && node bench/run-stats.mjs",
     "verify:package": "node scripts/verify-package.mjs",
     "bench:claims": "pnpm run build && node bench/run-claims.mjs"
   },
