@@ -79,7 +79,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:package": "node scripts/verify-package.mjs",
-    "bench:claims": "pnpm run build && node bench/run-claims.mjs"
+    "bench:claims": "pnpm run build && node bench/run-claims.mjs",
+    "bench:claims-holdout": "pnpm run build && node bench/run-claims-holdout.mjs"
   },
   "license": "Apache-2.0",
   "publishConfig": {

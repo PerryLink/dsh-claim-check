@@ -84,7 +84,7 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 
 ## 评测
 
-### 基准测试 —— `dsh-research-bench` claims v0.1.0（50 个用例）
+### 回归基线 —— `dsh-research-bench` claims v0.1.0（50 个用例）
 
 ```sh
 pnpm run bench:claims
@@ -102,11 +102,42 @@ pnpm run bench:claims
 
 逐用例原始预测：[`bench/results-claims.json`](bench/results-claims.json)。
 
-**有效性说明（引用这些数字前请先读）。** 这 50 个用例与检测规则是按照同一份评分标准一起写出的，而且在开发过程中有一个原本受支持的用例失败后，极性规则被收窄了。因此这些数字是**回归基线，而不是对真实稿件准确率的无偏估计**。基准测试的评分标准记录了这一限制；在对外作出任何发布声明之前，下一步需要一套不参照实现编写的留出集。
+**有效性说明（引用这些数字前请先读）。** 这 50 个用例与检测规则是按照同一份评分标准一起写出的，而且在开发过程中有一个原本受支持的用例失败后，极性规则被收窄了。因此这些数字是**回归基线，而不是对真实稿件准确率的无偏估计**。下面的留出集是下一步；它是由同一作者编写的时间留出集，而不是完全盲测。
+
+### 留出集（held-out）—— `dsh-research-bench` claims-heldout v0.1.0（50 个用例，2026-11-08 冻结）
+
+```sh
+pnpm run bench:claims-holdout
+```
+
+这 50 个用例位于同级 `dsh-research-bench` 工作树的 `data/claims-heldout/`（7 段合成原文，每段 4 句），并在第一次评测运行之前冻结。`SUMMARY.json` 记录 `heldOut: true`、`frozenAt: "2026-11-08"` 与 `sha256:016eaa67ba12ec1b3022e68dbc627b414c43733551fdd457b70dd1907e81d470`。运行器每次都会重新计算 `cases.jsonl` 的哈希；若与冻结哈希不一致就拒绝评分。冻结之后没有改过任何标签。
+
+| 指标 | 回归基线 | 留出集 |
+|---|---:|---:|
+| 判定准确率 | 1.00 | **0.96**（48/50） |
+| verified 精确率 / 召回率 | 1.00 / 1.00 | **0.88 / 1.00** |
+| insufficient 精确率 / 召回率 | 1.00 / 1.00 | **1.00 / 1.00** |
+| contradicted 精确率 / 召回率 | 1.00 / 1.00 | **1.00 / 0.83** |
+| disproven 精确率 / 召回率 | 1.00 / 1.00 | **1.00 / 1.00** |
+| 过度声称率（把不受支持的断言判为 verified） | 0.00 | **0.06**（2/35） |
+| 对受支持断言的误报率 | 0.00 | **0.00** |
+
+逐类准确率：supported 15/15、paraphrase 10/10、number-wrong 8/8、negated 6/7、quote-mined 4/5、insufficient 5/5。
+
+逐用例原始预测：[`bench/results-claims-holdout.json`](bench/results-claims-holdout.json)；markdown：[`bench/results-claims-holdout.md`](bench/results-claims-holdout.md)。
+
+**两处错误都是过度声称，而且都是线索词表覆盖不足。** 本留出集上的引用定位、数字匹配与带标签数值矛盾全部正确；错误来自词法线索表不认识的语义线索：
+
+1. `claim-0034`（negated；期望 `contradicted`，实际 `verified`）。原文说 "The coating failed to improve rate capability..."，断言只引用了 "improve rate capability at 4.2 V"。"Failed to" 是语义否定，但 v0.1 的否定线索是 `not` / `no` / `never` / ...，不包含它，因此极性检查没有触发。候选修复：把 `fail(?:ed|s)? to`、`unable to`、`declined to` 加入线索表，并补回归测试。
+2. `claim-0045`（quote-mined；期望 `contradicted`，实际 `verified`）。原文说 "Cooling seems tied to canopy density..."，断言把这种关联说成 "proves" 的因果结论。"Seems tied to" 是带限定/关联性的说法，但 v0.1 的限定线索不包含它，因此强度检查没有触发。候选修复：把 `seem(?:s|ed)?`、`appear(?:s|ed)?`、`tied to`、`linked to`、`tentative`、`exploratory` 加入限定线索，并补测试。
+
+这正是回归基线无法暴露的问题：基线用例和线索词表是同一作者一起写的。
+
+**独立性说明（如实）。** 留出集**不是完全盲测**。它由与回归基线同一位评分标准作者按照 `rubric/CLAIMS.md` 编写，并沿用同样的构造约定（显式双引号片段、每条断言一个引用片段、合成英文段落）。独立的是内容：7 个新主题、新句子、新数字，且没有复用 `data/claims` 的任何 source 段落或 claim；标签在第一次评测运行前就已固定并写入哈希，冻结后未再改动。它是时间上的留出集、是对线索词表覆盖度的检验，而不是对真实稿件准确率的无偏估计：该集合是合成的，且每类样本很小（5–15 条）。数据集目前留在同级 bench 工作树中；本仓库提交运行器和冻结后的结果，不提交这些用例。
 
 ### 测试
 
-**25 个测试**，分布在两个文件：evaluator（含所有格的引号抽取、首个 token 重复时的精确引用偏移、句子定位、verified / 转述 / 引文缺失 / 带标签数值矛盾 / 否定翻转 / 带限定词的过度声称 / 零结果准确性 / 区间引用 / 数字缺失 / 内容缺失）、runtime（REP 记录合法性、重复核查不产生证据冲突、persist=false、路径逃逸、绑定已存证据及其文本快照而非第一个快照）、tools（schema、渲染器、失败分支）、包契约。
+**26 个测试**，分布在三个文件：evaluator（含所有格的引号抽取、首个 token 重复时的精确引用偏移、句子定位、verified / 转述 / 引文缺失 / 带标签数值矛盾 / 否定翻转 / 带限定词的过度声称 / 零结果准确性 / 区间引用 / 数字缺失 / 内容缺失）、runtime/tools（REP 记录合法性、重复核查不产生证据冲突、persist=false、路径逃逸、绑定已存证据及其文本快照而非第一个快照；schema、渲染器、失败分支、包契约）、mount（enabled/disabled 挂载契约）。
 
 ## 已知限制（v0.1）
 
@@ -114,6 +145,7 @@ pnpm run bench:claims
 - 限定词检测是词法式的（使用固定的线索词表），因此刻意避开这些动词的因果断言可能通过检查。
 - 被引用的*区间*或样本量不携带方向信息，因此只对带方向性的片段做极性检查。
 - 非英文断言在结构上可用，但线索词表只有英文。
+- 留出集运行发现了两处具体的线索缺口：`failed to`（语义否定）与 `seems tied to`（限定/关联）；均记录在上面的留出集小节中。
 
 ## 许可
 

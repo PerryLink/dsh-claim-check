@@ -84,7 +84,7 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 
 ## Evaluation
 
-### Benchmark — `dsh-research-bench` claims v0.1.0 (50 cases)
+### Regression baseline — `dsh-research-bench` claims v0.1.0 (50 cases)
 
 ```sh
 pnpm run bench:claims
@@ -106,12 +106,76 @@ Raw per-case predictions: [`bench/results-claims.json`](bench/results-claims.jso
 detector rules were written together from the same rubric, and the polarity rule
 was narrowed after one supported case failed during development. These numbers
 are a **regression baseline, not an unbiased estimate** of real-manuscript
-accuracy. The bench rubric records this; a held-out set authored without
-reference to the implementation is the next step before any release claim.
+accuracy. The held-out set below is the next step; it is a same-author temporal
+hold-out, not a fully blind external audit.
+
+### Held-out set — `dsh-research-bench` claims-heldout v0.1.0 (50 cases, frozen 2026-11-08)
+
+```sh
+pnpm run bench:claims-holdout
+```
+
+The 50 cases live in the sibling `dsh-research-bench` working tree at
+`data/claims-heldout/` (seven synthetic sources, four sentences each) and were
+frozen before the first evaluation run. `SUMMARY.json` records
+`heldOut: true`, `frozenAt: "2026-11-08"` and
+`sha256:016eaa67ba12ec1b3022e68dbc627b414c43733551fdd457b70dd1907e81d470`.
+The runner re-hashes `cases.jsonl` on every run and refuses to score if the
+frozen hash no longer matches; no label was changed after the freeze.
+
+| metric | regression baseline | held-out |
+|---|---:|---:|
+| verdict accuracy | 1.00 | **0.96** (48/50) |
+| verified precision / recall | 1.00 / 1.00 | **0.88 / 1.00** |
+| insufficient precision / recall | 1.00 / 1.00 | **1.00 / 1.00** |
+| contradicted precision / recall | 1.00 / 1.00 | **1.00 / 0.83** |
+| disproven precision / recall | 1.00 / 1.00 | **1.00 / 1.00** |
+| over-claim rate (unsupported called verified) | 0.00 | **0.06** (2/35) |
+| false-alarm rate on supported claims | 0.00 | **0.00** |
+
+Per-category accuracy: supported 15/15, paraphrase 10/10, number-wrong 8/8,
+negated 6/7, quote-mined 4/5, insufficient 5/5.
+
+Raw per-case predictions: [`bench/results-claims-holdout.json`](bench/results-claims-holdout.json);
+markdown: [`bench/results-claims-holdout.md`](bench/results-claims-holdout.md).
+
+**The two misses are over-claims, and both are cue-list coverage gaps.** Quote
+location, number matching and labelled-value contradiction were perfect on this
+set; the errors are semantic cues the lexical lists do not know:
+
+1. `claim-0034` (negated; expected `contradicted`, predicted `verified`). The
+   source says "The coating failed to improve rate capability..." and the claim
+   quotes only "improve rate capability at 4.2 V". "Failed to" is a semantic
+   negation, but the v0.1 negation cues are `not` / `no` / `never` / ... and do
+   not include it, so the polarity check never runs. Candidate fix: add
+   `fail(?:ed|s)? to`, `unable to` and `declined to` to the cue list, with
+   regression tests.
+2. `claim-0045` (quote-mined; expected `contradicted`, predicted `verified`).
+   The source says "Cooling seems tied to canopy density..." and the claim says
+   that "proves" a causal effect. "Seems tied to" is associational/hedged, but
+   the v0.1 hedge cues do not include it, so the strength check never runs.
+   Candidate fix: add `seem(?:s|ed)?`, `appear(?:s|ed)?`, `tied to`, `linked
+   to`, `tentative` and `exploratory` to the hedge cues, with tests.
+
+These are exactly the cases a regression baseline cannot expose: the same author
+wrote the baseline cases alongside the cue lists.
+
+**Independence (honest).** The held-out set is **not a fully blind external
+audit**. It was written by the same rubric author as the regression baseline,
+from `rubric/CLAIMS.md`, and it follows the same construction conventions
+(explicit double-quoted spans, one quoted span per claim, synthetic English
+paragraphs). What is independent is the content: seven new topics, new
+sentences, new numbers, and no source paragraph or claim reused from
+`data/claims`; the labels were fixed and hashed before the first evaluation
+run, and no label was changed afterwards. It is a temporal hold-out and a test
+of cue-list coverage, not an unbiased estimate of real-manuscript accuracy: the
+set is synthetic and small (5–15 cases per category). The dataset stays in the
+sibling bench working tree for now; this repository commits the runner and the
+frozen results, not the cases.
 
 ### Tests
 
-**25 tests** across two files: evaluator (quote extraction incl. possessives, exact quote offsets when the first token repeats, sentence location, verified / paraphrase / absent quote / labelled-value contradiction / negation flip / hedged overclaim / null-result accuracy / interval quotes / missing number / absent content), runtime (REP record validity, re-check without an evidence conflict, persist=false, path escape, bind to stored evidence and to its text snapshot rather than the first snapshot), tools (schemas, renderers, failure branch), package contract.
+**26 tests** across three files: evaluator (quote extraction incl. possessives, exact quote offsets when the first token repeats, sentence location, verified / paraphrase / absent quote / labelled-value contradiction / negation flip / hedged overclaim / null-result accuracy / interval quotes / missing number / absent content), runtime/tools (REP record validity, re-check without an evidence conflict, persist=false, path escape, bind to stored evidence and to its text snapshot rather than the first snapshot; schemas, renderers, failure branch, package contract), mount (the enabled/disabled mount contract).
 
 ## Known limitations (v0.1)
 
@@ -119,6 +183,7 @@ reference to the implementation is the next step before any release claim.
 - Hedging detection is lexical (a fixed cue list), so a causal claim that avoids those verbs may pass.
 - A quoted *interval* or sample size does not carry direction, so polarity is only checked for directional fragments.
 - Non-English claims are supported structurally but the cue lists are English-only.
+- The held-out run found two concrete cue gaps: `failed to` (semantic negation) and `seems tied to` (hedge); both are tracked in the held-out section above.
 
 ## License
 

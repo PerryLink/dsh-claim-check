@@ -4,6 +4,25 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Held-out claim-support benchmark: 50 new cases in
+  `dsh-research-bench/data/claims-heldout` (seven synthetic source paragraphs,
+  new topics, wording and numbers), frozen on 2026-11-08 at
+  `sha256:016eaa67ba12ec1b3022e68dbc627b414c43733551fdd457b70dd1907e81d470`
+  before the first evaluation run. `pnpm run bench:claims-holdout` verifies the
+  freeze hash and writes `bench/results-claims-holdout.{json,md}`.
+- README (English and Chinese) now reports the held-out set separately from the
+  regression baseline, with an explicit independence caveat and the two failing
+  categories (negation cue `failed to`; hedge cue `seems tied to`).
+
+### Notes
+
+- Held-out result: verdict accuracy 0.96 (48/50), over-claim rate 0.0571
+  (2/35), false-alarm rate on supported claims 0.00. No runtime code changed.
+
 ## [0.1.1] - 2026-11-08
 
 ### Changed
