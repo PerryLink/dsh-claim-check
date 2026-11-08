@@ -1,0 +1,432 @@
+{
+  "generatedAt": "2026-11-08T09:17:54.493Z",
+  "command": "node bench/run-claims.mjs",
+  "benchDir": "/mnt/d/Projects/dsh/plugins/dsh-research-bench",
+  "metrics": {
+    "dataset": {
+      "name": "claims",
+      "version": "0.1.0",
+      "total": 50,
+      "cases": 50
+    },
+    "plugin": "@perrylink/dsh-claim-check",
+    "verdictAccuracy": 1,
+    "perLabel": {
+      "verified": {
+        "precision": 1,
+        "recall": 1,
+        "tp": 15,
+        "fp": 0,
+        "fn": 0
+      },
+      "insufficient": {
+        "precision": 1,
+        "recall": 1,
+        "tp": 15,
+        "fp": 0,
+        "fn": 0
+      },
+      "contradicted": {
+        "precision": 1,
+        "recall": 1,
+        "tp": 12,
+        "fp": 0,
+        "fn": 0
+      },
+      "disproven": {
+        "precision": 1,
+        "recall": 1,
+        "tp": 8,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "overclaimRate": 0,
+    "falseAlarmRateOnSupported": 0,
+    "supportedCases": 15,
+    "byCategory": {
+      "supported": {
+        "total": 15,
+        "correct": 15,
+        "accuracy": 1
+      },
+      "paraphrase": {
+        "total": 10,
+        "correct": 10,
+        "accuracy": 1
+      },
+      "number-wrong": {
+        "total": 8,
+        "correct": 8,
+        "accuracy": 1
+      },
+      "negated": {
+        "total": 7,
+        "correct": 7,
+        "accuracy": 1
+      },
+      "quote-mined": {
+        "total": 5,
+        "correct": 5,
+        "accuracy": 1
+      },
+      "insufficient": {
+        "total": 5,
+        "correct": 5,
+        "accuracy": 1
+      }
+    }
+  },
+  "predictions": [
+    {
+      "id": "claim-0001",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0002",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0003",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0004",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0005",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0006",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0007",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0008",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0009",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0010",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0011",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0012",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0013",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0014",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0015",
+      "category": "supported",
+      "prediction": {
+        "verdict": "verified"
+      }
+    },
+    {
+      "id": "claim-0016",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0017",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0018",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0019",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0020",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0021",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0022",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0023",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0024",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0025",
+      "category": "paraphrase",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0026",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0027",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0028",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0029",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0030",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0031",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0032",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0033",
+      "category": "number-wrong",
+      "prediction": {
+        "verdict": "disproven"
+      }
+    },
+    {
+      "id": "claim-0034",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0035",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0036",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0037",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0038",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0039",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0040",
+      "category": "negated",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0041",
+      "category": "quote-mined",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0042",
+      "category": "quote-mined",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0043",
+      "category": "quote-mined",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0044",
+      "category": "quote-mined",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0045",
+      "category": "quote-mined",
+      "prediction": {
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "id": "claim-0046",
+      "category": "insufficient",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0047",
+      "category": "insufficient",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0048",
+      "category": "insufficient",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0049",
+      "category": "insufficient",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    },
+    {
+      "id": "claim-0050",
+      "category": "insufficient",
+      "prediction": {
+        "verdict": "insufficient"
+      }
+    }
+  ]
+}

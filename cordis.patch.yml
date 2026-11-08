@@ -1,0 +1,14 @@
+# dsh-claim-check bundle patch: mount the claim support tools.
+#
+# Every key below is a Config field (Schemastery schema); invalid values fail
+# the profile load loudly. All checks are local and deterministic — no network.
+- insert:
+    - id: dsh-claim-check
+      name: dsh-claim-check
+      config:
+        enabled: true
+        root: .claim-check
+        # Hard cap on source characters; over-limit input fails, never truncates.
+        maxChars: 2000000
+        # Persist evidence + claim + record.
+        persist: true
