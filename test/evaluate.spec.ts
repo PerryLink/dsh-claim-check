@@ -26,6 +26,20 @@ describe('quote extraction', () => {
     const start = S2.indexOf('reduce')
     expect(sentenceAround(S2, start)).toContain('did not reduce')
   })
+
+  it('does not treat possessives as single-quoted spans', () => {
+    expect(quotesOf("The authors' findings echo participants' outcomes.")).toEqual([])
+    expect(quotesOf("The authors’ findings echo participants’ outcomes.")).toEqual([])
+  })
+
+  it('maps a quote to its real raw offsets when the first token occurs earlier', () => {
+    const source = 'the cat sat. the treatment group improved significantly (p = .018).'
+    const result = evaluate('The report says "the treatment group improved significantly".', source)
+    const quote = result.quotes[0]
+    expect(quote?.charStart).toBe(source.indexOf('the treatment'))
+    expect(source.slice(quote!.charStart, quote!.charEnd)).toBe('the treatment group improved significantly')
+    expect(sentenceAround(source, quote!.charStart)).toContain('improved significantly')
+  })
 })
 
 describe('verdicts', () => {

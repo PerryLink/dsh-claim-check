@@ -36,7 +36,7 @@ English · [简体中文](README-zh.md)
 | `disproven` | the quoted span is absent, or a labelled value contradicts the source |
 | `contradicted` | the cited sentence's negation or hedging was flipped |
 | `insufficient` | no verbatim span (paraphrase), or a number is missing, or the source says nothing |
-| `unverified` | nothing checkable was supplied at all |
+| `unverified` | reserved by REP v1 for a claim with no checkable content; v0.1 reports such a paraphrase as `insufficient` |
 
 `insufficient` never means false, and never means "clean".
 
@@ -111,7 +111,7 @@ reference to the implementation is the next step before any release claim.
 
 ### Tests
 
-**21 tests** across two files: evaluator (quote extraction, sentence location, verified / paraphrase / absent quote / labelled-value contradiction / negation flip / hedged overclaim / null-result accuracy / interval quotes / missing number / absent content), runtime (REP record validity, persist=false, path escape, bind to stored evidence), tools (schemas, renderers, failure branch), package contract.
+**25 tests** across two files: evaluator (quote extraction incl. possessives, exact quote offsets when the first token repeats, sentence location, verified / paraphrase / absent quote / labelled-value contradiction / negation flip / hedged overclaim / null-result accuracy / interval quotes / missing number / absent content), runtime (REP record validity, re-check without an evidence conflict, persist=false, path escape, bind to stored evidence and to its text snapshot rather than the first snapshot), tools (schemas, renderers, failure branch), package contract.
 
 ## Known limitations (v0.1)
 

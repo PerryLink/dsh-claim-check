@@ -68,6 +68,47 @@ describe('runtime', () => {
     expect(bound.verdict).toBe('verified')
     expect(bound.claimId).not.toBe(first.claimId)
   })
+
+  it('re-checks the same claim without an evidence conflict', async () => {
+    const initial = await runtime().check({ claim: CLAIM, text: SOURCE })
+    const later = new ClaimCheckRuntime({
+      config: resolveConfig({ workspaceRoot: workspace, root: path.join(workspace, '.claim-check') }),
+      now: () => new Date('2026-06-02T09:00:00.000Z'),
+    })
+    const again = await later.check({ claim: CLAIM, text: SOURCE })
+    expect(again.verdict).toBe(initial.verdict)
+    expect(again.evidenceId).toBe(initial.evidenceId)
+    expect(again.claimId).toBe(initial.claimId)
+  })
+
+  it('binds a locator to the textual snapshot, not the first snapshot', async () => {
+    const rt = runtime()
+    const port = rt.port()
+    const original = await port.capture({
+      bytes: Buffer.from('%PDF-1.4 synthetic'),
+      mediaType: 'application/pdf',
+      sourceRef: { kind: 'file', id: 'paper.pdf', retrievedAt: AT.toISOString() },
+      capturedAt: AT.toISOString(),
+    })
+    const textual = await port.capture({
+      bytes: SOURCE,
+      mediaType: 'text/plain',
+      sourceRef: { kind: 'file', id: 'paper.pdf', retrievedAt: AT.toISOString() },
+      capturedAt: AT.toISOString(),
+    })
+    const { evidence } = await port.addEvidence({
+      evidenceId: 'ev-doc-anchor-test',
+      title: 'Anchored paper',
+      sourceRef: { kind: 'file', id: 'paper.pdf', retrievedAt: AT.toISOString() },
+      snapshotIds: [original.snapshot.snapshotId, textual.snapshot.snapshotId],
+      anchors: [{ snapshotId: textual.snapshot.snapshotId, kind: 'record', value: 'field:text' }],
+      provenance: { plugin: 'test', version: '0.0.0', method: 'fixture', retrievedAt: AT.toISOString() },
+    })
+    const bound = await rt.bind({ claim: 'The trial reports "d = 0.45".', evidenceId: evidence.evidenceId })
+    const record = await port.buildRecord({ claimIds: [bound.claimId!] })
+    const claim = (record as unknown as { claims: Array<{ locator?: { snapshotId: string } }> }).claims[0]
+    expect(claim?.locator?.snapshotId).toBe(textual.snapshot.snapshotId)
+  })
 })
 
 describe('tools', () => {
@@ -115,6 +156,7 @@ describe('package', () => {
     const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as Record<string, unknown>
     expect(pkg['name']).toBe('dsh-claim-check')
     expect(pkg['version']).toBe(VERSION)
+    expect(pkg['author']).toBe('dsh-claim-check contributors')
     expect(pkg['dsh']).toEqual({ manifestVersion: 1, bundle: { patch: './cordis.patch.yml' } })
   })
 })

@@ -62,26 +62,38 @@ const LABELLED = /\b(n|d|OR|RR|HR|p|r|t|F|z|χ²|M|SD|SE)\s*(?:\([^)]*\))?\s*=\s
 export function quotesOf(claim: string): string[] {
   const quotes: string[] = []
   for (const match of claim.matchAll(/["“”]([^"“”]{3,300})["“”]/gu)) quotes.push(match[1]!.trim())
-  for (const match of claim.matchAll(/[‘’']([^‘’']{3,300})[‘’']/gu)) quotes.push(match[1]!.trim())
+  // An apostrophe (authors' findings) is not an opening quote: single-quoted
+  // spans only count when the delimiter is not glued to a word.
+  for (const match of claim.matchAll(/(?<![\p{L}\p{N}])[‘’']([^‘’']{3,300})[‘’'](?![\p{L}\p{N}])/gu)) {
+    quotes.push(match[1]!.trim())
+  }
   return [...new Set(quotes.filter(quote => quote !== ''))]
 }
 
-/** Find a quote in the source (normalized substring search). */
+/** Escape one literal for use inside a RegExp. */
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')
+}
+
+/**
+ * Find a quote in the source (whitespace/Unicode-normalized substring search)
+ * while keeping offsets that slice back to the original source.
+ */
 function locateQuote(quote: string, source: string): { found: boolean; charStart: number; charEnd: number } {
   const needle = normalizeText(quote)
   if (needle === '') return { found: false, charStart: -1, charEnd: -1 }
-  const haystack = normalizeText(source)
-  const index = haystack.indexOf(needle)
-  if (index === -1) return { found: false, charStart: -1, charEnd: -1 }
-  // Map the normalized offset back to the raw source approximately: find the
-  // same start token in the raw text.
-  const firstToken = needle.split(' ')[0] ?? ''
-  const rawIndex = firstToken === '' ? -1 : source.toLowerCase().indexOf(firstToken)
-  return {
-    found: true,
-    charStart: rawIndex === -1 ? index : rawIndex,
-    charEnd: rawIndex === -1 ? index + needle.length : Math.min(source.length, rawIndex + quote.length),
+  // Exact match first: the common case, and it yields the true raw span.
+  const exact = source.indexOf(quote)
+  if (exact !== -1) return { found: true, charStart: exact, charEnd: exact + quote.length }
+  // NFKC-normalized whitespace can differ from the source; match the same token
+  // sequence with flexible whitespace instead of guessing from the first token.
+  const tokens = needle.split(' ').filter(token => token !== '')
+  if (tokens.length > 0) {
+    const pattern = new RegExp(tokens.map(escapeRegExp).join('\\s+'), 'u')
+    const match = pattern.exec(source)
+    if (match !== null) return { found: true, charStart: match.index, charEnd: match.index + match[0].length }
   }
+  return { found: false, charStart: -1, charEnd: -1 }
 }
 
 /** The sentence of the source that contains the (found) quote. */

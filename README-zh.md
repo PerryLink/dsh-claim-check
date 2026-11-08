@@ -36,7 +36,7 @@
 | `disproven` | the quoted span is absent, or a labelled value contradicts the source |
 | `contradicted` | the cited sentence's negation or hedging was flipped |
 | `insufficient` | no verbatim span (paraphrase), or a number is missing, or the source says nothing |
-| `unverified` | nothing checkable was supplied at all |
+| `unverified` | REP v1 为「完全没有可核查内容」保留；v0.1 把这类转述报告为 `insufficient` |
 
 `insufficient` never means false, and never means "clean".
 
@@ -111,7 +111,7 @@ reference to the implementation is the next step before any release claim.
 
 ### Tests
 
-**21 tests** across two files: evaluator (quote extraction, sentence location, verified / paraphrase / absent quote / labelled-value contradiction / negation flip / hedged overclaim / null-result accuracy / interval quotes / missing number / absent content), runtime (REP record validity, persist=false, path escape, bind to stored evidence), tools (schemas, renderers, failure branch), package contract.
+**25 个测试 / 2 个文件**：evaluator（引号抽取含所有格、首词重复时的精确偏移、句子定位、verified/转述/引文缺失/标签值矛盾/否定翻转/对冲过度声称/零结果准确/区间引用/数字缺失/内容缺失）、runtime（REP 记录合法、重复核查不产生证据冲突、persist=false、路径逃逸、绑定已存证据且 locator 指向文本快照而非第一个快照）、tools（schema、渲染、失败分支）、包契约。
 
 ## 已知限制（v0.1）
 

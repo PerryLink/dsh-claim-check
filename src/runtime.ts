@@ -213,16 +213,27 @@ export class ClaimCheckRuntime {
     if (withSnapshot.length === 0) {
       withSnapshot.push({ snapshotId: captured.snapshot.snapshotId, kind: 'record', value: 'field:text' })
     }
-    const evidenceId = stableId('ev', ['claim-check', source.id, captured.snapshot.snapshotId])
+    // The evidence records one claim's view of the source: different claims
+    // legitimately anchor different spans, so the claim is part of the identity.
+    // Timestamps come from the immutable snapshot so re-running the same check
+    // dedupes instead of failing with EVIDENCE_CONFLICT.
+    const evidenceSourceRef = { ...source.sourceRef, retrievedAt: captured.snapshot.capturedAt }
+    const evidenceId = stableId('ev', [
+      'claim-check',
+      source.id,
+      captured.snapshot.snapshotId,
+      claim,
+      ...withSnapshot.map(anchor => `${anchor.value}:${anchor.charRange?.start ?? -1}-${anchor.charRange?.end ?? -1}`),
+    ])
     const claimId = stableId('cl', [claim, evidenceId])
     try {
       await port.addEvidence({
         evidenceId,
         title: `Source text for claim check (${source.id})`,
-        sourceRef: source.sourceRef,
+        sourceRef: evidenceSourceRef,
         snapshotIds: [captured.snapshot.snapshotId],
         anchors: withSnapshot,
-        provenance: { plugin: 'dsh-claim-check', version: VERSION, method: 'quote-span+number-match+polarity', retrievedAt: this.iso() },
+        provenance: { plugin: 'dsh-claim-check', version: VERSION, method: 'quote-span+number-match+polarity', retrievedAt: captured.snapshot.capturedAt },
       })
       await port.addClaim({
         claimId,
@@ -280,11 +291,13 @@ export class ClaimCheckRuntime {
     const evidence = await port.getEvidence(request.evidenceId)
     if (evidence === undefined) throw new ClaimCheckError('EVIDENCE_UNKNOWN', `unknown evidence ${request.evidenceId}`)
     let text: string | undefined
+    let textSnapshotId: HashRef | undefined
     for (const snapshotId of evidence.snapshotIds) {
       const view = await port.getSnapshot(snapshotId)
       if (view === undefined) continue
       if (view.snapshot.mediaType.startsWith('text/')) {
         text = Buffer.from(view.bytes).toString('utf8')
+        textSnapshotId = snapshotId
         break
       }
     }
@@ -303,7 +316,7 @@ export class ClaimCheckRuntime {
         ...(evaluation.quotes[0]?.found === true
           ? {
               locator: {
-                snapshotId: evidence.snapshotIds[0]!,
+                snapshotId: textSnapshotId!,
                 kind: 'char' as const,
                 value: `c.${evaluation.quotes[0].charStart}-${evaluation.quotes[0].charEnd}`,
                 charRange: { start: evaluation.quotes[0].charStart, end: evaluation.quotes[0].charEnd },
