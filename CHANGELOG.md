@@ -23,6 +23,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Held-out result: verdict accuracy 0.96 (48/50), over-claim rate 0.0571
   (2/35), false-alarm rate on supported claims 0.00. No runtime code changed.
 
+## [0.1.2] - 2026-11-08
+
+### Added
+
+- Frozen 50-case held-out claim set and `pnpm run bench:claims-holdout`. The held-out run scores 48/50; the two misses (`failed to` negation, `seems tied to` hedge) are kept as evidence and are not tuned away. The held-out set is a same-author time split, not a blind estimate.
+
 ## [0.1.1] - 2026-11-08
 
 ### Changed
