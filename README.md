@@ -1,13 +1,22 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-claim-check-hero-en-light.webp" width="100%" alt="dsh-claim-check: bench case claim-0026 — the quoted span is located verbatim, the number 0.80 is absent from the source, and the labelled value d = 0.80 contradicts the source's d = 0.45, so the verdict is disproven; the three check ids and the REP record are on the right">
+</picture>
+
 # dsh-claim-check
 
 **Does the source actually support the claim as written?**
 
 *Byte-level, deterministic, recomputable: verbatim spans, numbers, labelled values, negation and hedging. A paraphrase is reported as `insufficient` — never as "supported".*
 
+[简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24.9-brightgreen.svg)]()
 
-English · [简体中文](README-zh.md)
+</div>
 
 ---
 
@@ -19,6 +28,14 @@ English · [简体中文](README-zh.md)
 - **Polarity check** — an affirmative claim built on a fragment of a negated sentence ("**not** significant") is `contradicted`.
 - **Strength check** — a hedged/associational sentence ("may be associated", "preliminary") sold as causal ("proves", "demonstrates") is `contradicted`.
 - **REP integration** — source snapshot + claim + verdict + checks become a valid record; `claim_bind` checks against evidence already stored by `doc_anchor` / `cite_verify`.
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check structure: a claim and its source text go through verbatim span location, number matching, labelled-value comparison and polarity/strength checks, producing checks[] and a derived verdict that is sealed into a REP v1 evidence, claim and verdict record">
+</picture>
+
+*Structure: extract → compare → record; `checks[]` and `verdict` are the two outputs, and a paraphrase with no verbatim span is `insufficient` rather than "supported". The token labels inside the diagram are the real tool and check names, so the same picture serves all five languages.*
 
 ## What it does not do
 
@@ -83,6 +100,11 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 | `persist` | `true` | store evidence + claim + record |
 
 ## Evaluation
+
+![dsh-claim-check benchmark: the real stdout over the frozen 50-case claims regression baseline — verdict accuracy 1, over-claim rate 0, false-alarm rate on supported claims 0](docs/assets/dsh-claim-check-demo.gif)
+
+*Animated: `node bench/run-claims.mjs` over the frozen `dsh-research-bench` claims v0.1.0 set (sibling bench checkout supplied via `BENCH_DIR`; no network, no model call; re-run 2026-11-21). These are regression-baseline numbers, not an unbiased estimate — the held-out section below reports 0.96.*
+
 
 ### Regression baseline — `dsh-research-bench` claims v0.1.0 (50 cases)
 

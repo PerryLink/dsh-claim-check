@@ -1,13 +1,22 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-claim-check-hero-zh-light.webp" width="100%" alt="dsh-claim-check 配图：基准用例 claim-0026 —— 引用片段逐字命中，数字 0.80 在原文中不存在，且标注值 d = 0.80 与原文的 d = 0.45 矛盾，判定为 disproven；右侧是三条检查编号与 REP 记录">
+</picture>
+
 # dsh-claim-check
 
 **来源原文是否真的支持这条断言？**
 
 *逐字节、确定性、可复算：逐字片段、数字、带标签的数值、否定与限定。转述按 `insufficient` 处理，绝不报“支持”。*
 
+[English](README.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24.9-brightgreen.svg)]()
 
-[English](README.md) · 简体中文
+</div>
 
 ---
 
@@ -19,6 +28,14 @@
 - **极性检查** —— 拿否定句（“**not** significant”）的片段拼出的肯定断言，会被判为 `contradicted`。
 - **强度检查** —— 把带限定或仅表相关性的句子（“may be associated”“preliminary”）说成因果结论（“proves”“demonstrates”），会被判为 `contradicted`。
 - **REP 集成** —— 原文快照 + 断言 + 判定 + 各项检查会组成一条合法记录；`claim_bind` 可对照 `doc_anchor` / `cite_verify` 已经存储的证据做检查。
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check 结构图：断言与来源原文经逐字片段定位、数字比对、带标签数值比对与否定/限定检查，产出 checks[] 与由检查推导的 verdict，并封存为一条 REP v1 证据、声明与判定记录">
+</picture>
+
+*结构：抽取 → 比对 → 记录；`checks[]` 与 `verdict` 是两条输出，没有逐字片段的转述记为 `insufficient` 而不是“支持”。图内只有工具名与检查名，五语共用同一张结构图。*
 
 ## 它不做什么
 
@@ -83,6 +100,11 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 | `persist` | `true` | 存储证据、断言与记录 |
 
 ## 评测
+
+![dsh-claim-check 基准评测：50 条冻结断言回归基线上的真实 stdout —— 判定准确率 1，过度断言率 0，支持类误报率 0](docs/assets/dsh-claim-check-demo.gif)
+
+*动图是 `node bench/run-claims.mjs` 在 `dsh-research-bench` claims v0.1.0 冻结用例集上的真实 stdout（同仓 bench 目录经 `BENCH_DIR` 指定；不联网、无模型调用；2026-11-21 复跑）。这些是回归基线数字，不是无偏估计 —— 下文 held-out 一节报告 0.96。*
+
 
 ### 回归基线 —— `dsh-research-bench` claims v0.1.0（50 个用例）
 

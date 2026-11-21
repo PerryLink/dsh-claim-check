@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-label="dsh-claim-check structure diagram">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#f9f6fd"/><stop offset="1" stop-color="#e4eaf8"/></linearGradient>
+<filter id="soft" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#16122c" flood-opacity="0.10"/></filter>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#4B67B4"/></marker>
+</defs>
+<rect width="1100" height="660" fill="url(#bg)"/>
+<text x="44" y="58" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="28" font-weight="700">dsh-claim-check</text>
+<text x="44" y="88" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="15">claim + source → quote spans · numbers · labelled values · polarity → checks[] + verdict → REP record</text>
+<rect x="950.765625" y="36" width="105.234375" height="26" rx="13.0" fill="#f5f2fb"/>
+<text x="962.765625" y="53.08" fill="#4B67B4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12" font-weight="700">no model call</text>
+<rect x="44" y="120" width="214" height="250" rx="18" fill="#ffffff" stroke="#e6e2ef" stroke-width="1.5" filter="url(#soft)"/>
+<text x="62" y="146" fill="#8f94a4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="12" font-weight="700">01</text>
+<text x="62" y="172" fill="#141419" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="16.5" font-weight="700">Extract</text>
+<text x="62" y="196" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">claim → spans + numbers</text>
+<rect x="62" y="209" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="72" y="227" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">quotesOf(claim)</text>
+<rect x="62" y="241" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="72" y="259" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">extractNumericTokens</text>
+<rect x="62" y="273" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="72" y="291" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">LABELLED · n d OR p</text>
+<line x1="260" y1="245.0" x2="276" y2="245.0" stroke="#4B67B4" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="278" y="120" width="214" height="250" rx="18" fill="#ffffff" stroke="#e6e2ef" stroke-width="1.5" filter="url(#soft)"/>
+<text x="296" y="146" fill="#8f94a4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="12" font-weight="700">02</text>
+<text x="296" y="172" fill="#141419" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="16.5" font-weight="700">Compare</text>
+<text x="296" y="196" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">source → located evidence</text>
+<rect x="296" y="209" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="306" y="227" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">locateQuote</text>
+<rect x="296" y="241" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="306" y="259" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">numericTokensEqual</text>
+<rect x="296" y="273" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="306" y="291" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">sentenceAround</text>
+<line x1="494" y1="245.0" x2="510" y2="245.0" stroke="#4B67B4" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="512" y="120" width="214" height="250" rx="18" fill="#ffffff" stroke="#e6e2ef" stroke-width="1.5" filter="url(#soft)"/>
+<text x="530" y="146" fill="#8f94a4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="12" font-weight="700">03</text>
+<text x="530" y="172" fill="#141419" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="16.5" font-weight="700">Record</text>
+<text x="530" y="196" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">REP v1 evidence + claim</text>
+<rect x="530" y="209" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="540" y="227" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">checks[]</text>
+<rect x="530" y="241" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="540" y="259" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">evidenceId</text>
+<rect x="530" y="273" width="178" height="26" rx="8" fill="#f5f2fb"/>
+<text x="540" y="291" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">claimId</text>
+<rect x="752" y="120" width="304" height="148" rx="18" fill="#ffffff" stroke="#e6e2ef" stroke-width="1.5" filter="url(#soft)"/>
+<text x="772" y="148" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14.5" font-weight="700">checks[]</text>
+<rect x="924.84375" y="130" width="112.640625" height="18" rx="9.0" fill="#f5f2fb"/>
+<text x="933.84375" y="142.57" fill="#4B67B4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="10.5">pass | fail | skipped</text>
+<text x="772" y="176" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">chk-quote-95cac5 pass</text>
+<text x="772" y="198" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">chk-numbers-81e7a3 fail</text>
+<text x="772" y="220" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">chk-label-1739f4 fail</text>
+<rect x="752" y="288" width="304" height="122" rx="18" fill="#ffffff" stroke="#e6e2ef" stroke-width="1.5" filter="url(#soft)"/>
+<text x="772" y="316" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14.5" font-weight="700">verdict</text>
+<rect x="986.265625" y="298" width="55.609375" height="18" rx="9.0" fill="#f5f2fb"/>
+<text x="995.265625" y="310.57" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="10.5">derived</text>
+<text x="772" y="344" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">label fail → disproven</text>
+<text x="772" y="366" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">polarity fail → contradicted</text>
+<text x="772" y="388" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">no span → insufficient</text>
+<rect x="752" y="430" width="304" height="82" rx="18" fill="#ffffff" stroke="#4B67B4" stroke-width="1.6" filter="url(#soft)"/>
+<text x="772" y="458" fill="#141419" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700">reviewer</text>
+<text x="772" y="482" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">a verdict is about the text</text>
+<text x="772" y="502" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="10.5">never about the authors</text>
+<path d="M730 245.0 H742" fill="none" stroke="#4B67B4" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M742 210 V471" fill="none" stroke="#4B67B4" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="742" y1="194" x2="750" y2="194" stroke="#4B67B4" stroke-width="1.6" marker-end="url(#arr)"/>
+<line x1="742" y1="349" x2="750" y2="349" stroke="#4B67B4" stroke-width="1.6" marker-end="url(#arr)"/>
+<line x1="742" y1="471" x2="750" y2="471" stroke="#4B67B4" stroke-width="1.6" marker-end="url(#arr)"/>
+<line x1="44" y1="420" x2="714" y2="420" stroke="#dcd8ea" stroke-width="1"/>
+<text x="44" y="444" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11">quote-span / number-match / polarity / strength are pure functions of the two strings.</text>
+<text x="44" y="464" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11">A paraphrase with no verbatim span is insufficient — not &quot;supported&quot;, and not evidence of fabrication.</text>
+<line x1="44" y1="564" x2="1056" y2="564" stroke="#dcd8ea" stroke-width="1"/>
+<text x="44" y="588" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">config: root · workspaceRoot · maxChars · persist | zero runtime dependencies</text>
+<text x="44" y="610" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5">boundary: no embeddings · no model call · no network · the checks are textual</text>
+</svg>
