@@ -29,7 +29,6 @@
 - **Comprobación de fuerza** — una oración matizada o asociativa ("may be associated", "preliminary") vendida como causal ("proves", "demonstrates") es `contradicted`.
 - **Integración REP** — instantánea de la fuente + afirmación + veredicto + comprobaciones forman un registro válido; `claim_bind` comprueba contra evidencia ya almacenada por `doc_anchor` / `cite_verify`.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
   <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check estructura: una afirmación y el texto de su fuente pasan por localización de fragmentos literales, coincidencia de números, comparación de valores etiquetados y comprobaciones de polaridad/fuerza, produciendo checks[] y un veredicto derivado que se sella en un registro REP v1 de evidencia, afirmación y veredicto">
@@ -79,7 +78,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (verificado el 2026-11-18); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (verificado el 2026-11-22); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (probado en `24.22.1`), solo ESM |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | Dependencias de runtime | **cero** |
@@ -104,7 +103,6 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 ![dsh-claim-check benchmark: la salida real sobre la línea base de regresión de 50 afirmaciones congeladas — exactitud del veredicto 1, tasa de sobreafirmación 0, tasa de falsas alarmas en afirmaciones respaldadas 0](docs/assets/dsh-claim-check-demo.gif)
 
 *Animado: `node bench/run-claims.mjs` sobre el conjunto congelado `dsh-research-bench` claims v0.1.0 (el checkout de bench hermano se indica con `BENCH_DIR`; sin red, sin llamada a un modelo; reejecutado el 2026-11-21). Son cifras de línea base de regresión, no una estimación insesgada — la sección del conjunto retenido de abajo reporta 0.96.*
-
 
 ### Base de regresión — `dsh-research-bench` claims v0.1.0 (50 casos)
 

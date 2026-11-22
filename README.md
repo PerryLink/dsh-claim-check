@@ -29,7 +29,6 @@
 - **Strength check** — a hedged/associational sentence ("may be associated", "preliminary") sold as causal ("proves", "demonstrates") is `contradicted`.
 - **REP integration** — source snapshot + claim + verdict + checks become a valid record; `claim_bind` checks against evidence already stored by `doc_anchor` / `cite_verify`.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
   <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check structure: a claim and its source text go through verbatim span location, number matching, labelled-value comparison and polarity/strength checks, producing checks[] and a derived verdict that is sealed into a REP v1 evidence, claim and verdict record">
@@ -79,7 +78,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (verified 2026-11-18); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (verified 2026-11-22); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (tested `24.22.1`), ESM only |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | Runtime dependencies | **zero** |
@@ -104,7 +103,6 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 ![dsh-claim-check benchmark: the real stdout over the frozen 50-case claims regression baseline — verdict accuracy 1, over-claim rate 0, false-alarm rate on supported claims 0](docs/assets/dsh-claim-check-demo.gif)
 
 *Animated: `node bench/run-claims.mjs` over the frozen `dsh-research-bench` claims v0.1.0 set (sibling bench checkout supplied via `BENCH_DIR`; no network, no model call; re-run 2026-11-21). These are regression-baseline numbers, not an unbiased estimate — the held-out section below reports 0.96.*
-
 
 ### Regression baseline — `dsh-research-bench` claims v0.1.0 (50 cases)
 

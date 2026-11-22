@@ -29,7 +29,6 @@
 - **强度检查** —— 把带限定或仅表相关性的句子（“may be associated”“preliminary”）说成因果结论（“proves”“demonstrates”），会被判为 `contradicted`。
 - **REP 集成** —— 原文快照 + 断言 + 判定 + 各项检查会组成一条合法记录；`claim_bind` 可对照 `doc_anchor` / `cite_verify` 已经存储的证据做检查。
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
   <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check 结构图：断言与来源原文经逐字片段定位、数字比对、带标签数值比对与否定/限定检查，产出 checks[] 与由检查推导的 verdict，并封存为一条 REP v1 证据、声明与判定记录">
@@ -79,7 +78,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`**（2026-11-18 实测）；peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`**（2026-11-22 实测）；peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0`（实测 `24.22.1`），仅 ESM |
 | Peer 依赖 | `@perrylink/dsh-research-core ^0.1.0`、`@deepseek-ai/cordis ^4.0.5-alpha.1`、`@deepseek-ai/dsh-tools`、`@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | 运行时依赖 | **零** |
@@ -104,7 +103,6 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 ![dsh-claim-check 基准评测：50 条冻结断言回归基线上的真实 stdout —— 判定准确率 1，过度断言率 0，支持类误报率 0](docs/assets/dsh-claim-check-demo.gif)
 
 *动图是 `node bench/run-claims.mjs` 在 `dsh-research-bench` claims v0.1.0 冻结用例集上的真实 stdout（同仓 bench 目录经 `BENCH_DIR` 指定；不联网、无模型调用；2026-11-21 复跑）。这些是回归基线数字，不是无偏估计 —— 下文 held-out 一节报告 0.96。*
-
 
 ### 回归基线 —— `dsh-research-bench` claims v0.1.0（50 个用例）
 

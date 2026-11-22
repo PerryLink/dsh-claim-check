@@ -29,7 +29,6 @@
 - **तीव्रता (strength) जाँच** — हेज्ड या सहसंबंध-सूचक वाक्य ("may be associated", "preliminary") को कारण-निष्कर्ष ("proves", "demonstrates") के रूप में बेचना `contradicted` होता है।
 - **REP एकीकरण** — स्रोत स्नैपशॉट + दावा + निर्णय + जाँचें एक वैध रिकॉर्ड बनाते हैं; `claim_bind` उस एविडेंस के विरुद्ध जाँचता है जो `doc_anchor` / `cite_verify` पहले से संग्रहीत कर चुके हैं।
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-claim-check-flow-v5-dark.svg">
   <img src="docs/assets/dsh-claim-check-flow-v5-light.svg" width="100%" alt="dsh-claim-check संरचना: एक दावा और उसका स्रोत पाठ शब्दशः अंश खोज, संख्या मिलान, लेबल किए गए मानों की तुलना और ध्रुवता/तीव्रता जाँचों से गुज़रते हैं, जिससे checks[] और व्युत्पन्न निर्णय बनता है जो REP v1 एविडेंस, दावा और निर्णय रिकॉर्ड में सील हो जाता है">
@@ -79,7 +78,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (2026-11-18 को सत्यापित); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (2026-11-22 को सत्यापित); peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (`24.22.1` पर परीक्षित), केवल ESM |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | रनटाइम निर्भरताएँ | **शून्य** |
@@ -104,7 +103,6 @@ dsh --profile <name> --dump-config | grep @perrylink/dsh-claim-check
 ![dsh-claim-check बेंचमार्क: 50 जमे हुए दावों वाली रिग्रेशन बेसलाइन पर असली आउटपुट — निर्णय सटीकता 1, अति-दावे की दर 0, समर्थित दावों पर झूठे अलार्म की दर 0](docs/assets/dsh-claim-check-demo.gif)
 
 *एनिमेटेड: जमे हुए `dsh-research-bench` claims v0.1.0 सेट पर `node bench/run-claims.mjs` (सहोदर बेंच चेकआउट `BENCH_DIR` से दिया गया; कोई नेटवर्क नहीं, कोई मॉडल कॉल नहीं; 2026-11-21 को दोबारा चलाया गया)। ये रिग्रेशन-बेसलाइन के आँकड़े हैं, कोई निष्पक्ष अनुमान नहीं — नीचे होल्ड-आउट सेक्शन 0.96 रिपोर्ट करता है।*
-
 
 ### रिग्रेशन बेसलाइन — `dsh-research-bench` claims v0.1.0 (50 केस)
 
