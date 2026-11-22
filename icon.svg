@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="@perrylink/dsh-claim-check">
+  <rect width="128" height="128" rx="24" fill="hsl(16 45% 18%)"/>
+  <circle cx="57" cy="55" r="30" fill="none" stroke="hsl(56 70% 62%)" stroke-width="6"/>
+  <path d="M87 55 L115 70 L87 85 Z" fill="hsl(216 65% 58%)"/>
+</svg>
